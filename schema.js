@@ -24,12 +24,24 @@ type Query {
     getAllRecipes: [Recipe]
 }
 
+type Token {
+    token: String!
+}
+
 type Mutation {
-    addRecipe( name: String!,
+    addRecipe( 
+        name: String!,
         description: String!,
         category: String!,
         instructions: String!,
-        username: String): Recipe
+        username: String
+    ): Recipe
+
+    signupUser(
+        username: String!,
+        password: String!,  
+        email: String!
+    ): Token
 }
 
 `;
