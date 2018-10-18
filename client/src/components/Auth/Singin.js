@@ -45,6 +45,7 @@ class Signin extends React.Component {
     return (
       <div className="App">
         <h2 className="App">Signin</h2>
+        <h3> "username": "Sara", // "password": "dafgdh123"</h3>
         <Mutation mutation={SIGNIN_USER} variables={{ username, password }}>
           {(signinUser, { data, loading, error }) => {
             return (
