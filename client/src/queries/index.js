@@ -11,6 +11,7 @@ export const GET_ALL_RECIPES = gql`
       instructions
       likes
       createdDate
+      username
     }
   }
 `;
@@ -25,11 +26,39 @@ export const GET_RECIPE = gql`
       instructions
       likes
       createdDate
+      username
     }
   }
 `;
 
 /** Recepies Mutations */
+
+export const ADD_RECIPE = gql`
+  mutation(
+    $name: String!
+    $description: String!
+    $category: String!
+    $instructions: String!
+    $username: String
+  ) {
+    addRecipe(
+      name: $name
+      description: $description
+      category: $category
+      instructions: $instructions
+      username: $username
+    ) {
+      _id
+      name
+      category
+      description
+      instructions
+      likes
+      createdDate
+      username
+    }
+  }
+`;
 
 /** User Queries */
 

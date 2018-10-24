@@ -37,10 +37,10 @@ const client = new ApolloClient({
   onError: ({ networkError }) => {
     if (networkError) {
       console.log('Network Error', networkError);
-      // if (networkError.statusCode === 401) {
-      //   localStorage.setItem('token', '');
-      //   // localStorage.removeItem('token');
-      // }
+      if (networkError.statusCode === 401) {
+        localStorage.setItem('token', '');
+        // localStorage.removeItem('token');
+      }
     }
   },
 });
