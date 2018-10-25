@@ -53,7 +53,7 @@ const Root = ({ refetch, session }) => (
         <Route path="/" exact component={App} />
         <Route path="/search" component={Search} />
         <Route path="/recipes/:_id" component={RecipePage} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" render={() => <Profile session={session} />} />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
         <Route
