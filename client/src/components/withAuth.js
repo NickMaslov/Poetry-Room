@@ -9,7 +9,6 @@ const withAuth = conditionFunc => Component => props => (
     {({ data, loading }) => {
       if (loading) return null;
       // if (error) return `Error!: ${error}`;
-      console.log('*withAuth*', data);
       return conditionFunc(data) ? (
         <Component {...props} />
       ) : (
