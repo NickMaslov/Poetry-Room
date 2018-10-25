@@ -70,6 +70,11 @@ exports.resolvers = {
       }).save();
       return newRecipe;
     },
+    deleteUserRecipe: async (root, { _id }, { Recipe }) => {
+      const recipe = await Recipe.findOneAndRemove({ _id });
+      return recipe;
+    },
+
     signinUser: async (root, { username, password }, { User }) => {
       const user = await User.findOne({ username });
       if (!user) throw new Error('User not found');
