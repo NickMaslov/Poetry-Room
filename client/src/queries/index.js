@@ -70,6 +70,24 @@ export const ADD_RECIPE = gql`
   }
 `;
 
+export const LIKE_RECIPE = gql`
+  mutation($_id: ID!, $username: String!) {
+    likeRecipe(_id: $_id, username: $username) {
+      _id
+      likes
+    }
+  }
+`;
+
+export const UNLIKE_RECIPE = gql`
+  mutation($_id: ID!, $username: String!) {
+    unlikeRecipe(_id: $_id, username: $username) {
+      _id
+      likes
+    }
+  }
+`;
+
 export const DELETE_USER_RECIPE = gql`
   mutation($_id: ID!) {
     deleteUserRecipe(_id: $_id) {
