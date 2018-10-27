@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Spinner from 'react-spinners';
 
 import { Query, Mutation } from 'react-apollo';
 import {
@@ -9,6 +8,7 @@ import {
   GET_ALL_RECIPES,
   GET_CURRENT_USER,
 } from '../../queries';
+import Spinner from '../Spinner';
 
 const handleDelete = deleteUserRecipe => {
   const confirmDelete = window.confirm(

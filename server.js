@@ -30,6 +30,9 @@ mongoose
 //Initializes application
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // const corsOptions = {
 //   origin: 'http://localhost:3000',
 //   credentials: true,
