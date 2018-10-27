@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import CKEditor from 'react-ckeditor-component';
 
 import { Mutation } from 'react-apollo';
 import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
@@ -8,6 +9,7 @@ import withAuth from '../withAuth';
 
 const initialState = {
   name: '',
+  imageUrl: '',
   instructions: '',
   category: 'Breakfast',
   description: '',
@@ -34,6 +36,11 @@ class AddRecipe extends React.Component {
     });
   };
 
+  handleEditorChange = event => {
+    const newContent = event.editor.getData();
+    this.setState({ instructions: newContent });
+  };
+
   handleSubmit = (event, addRecipe) => {
     event.preventDefault();
     addRecipe().then(({ data }) => {
@@ -43,8 +50,9 @@ class AddRecipe extends React.Component {
   };
 
   validateForm = () => {
-    const { name, category, description, instructions } = this.state;
-    const isInvalid = !name || !category || !description || !instructions;
+    const { name, imageUrl, category, description, instructions } = this.state;
+    const isInvalid =
+      !name || !imageUrl || !category || !description || !instructions;
     return isInvalid;
   };
 
@@ -59,13 +67,27 @@ class AddRecipe extends React.Component {
   };
 
   render() {
-    const { name, category, description, instructions, username } = this.state;
+    const {
+      name,
+      imageUrl,
+      category,
+      description,
+      instructions,
+      username,
+    } = this.state;
     return (
       <div className="App">
         <h2 className="App">Add Recipe</h2>
         <Mutation
           mutation={ADD_RECIPE}
-          variables={{ name, category, description, instructions, username }}
+          variables={{
+            name,
+            imageUrl,
+            category,
+            description,
+            instructions,
+            username,
+          }}
           refetchQueries={() => [
             { query: GET_USER_RECIPES, variables: { username } },
           ]}
@@ -81,6 +103,13 @@ class AddRecipe extends React.Component {
                 name="name"
                 value={name}
                 placeholder="Recipe Name"
+                onChange={this.handleChange}
+              />
+              <input
+                type="text"
+                name="imageUrl"
+                value={imageUrl}
+                placeholder="Recipe Image"
                 onChange={this.handleChange}
               />
               <select
@@ -101,7 +130,13 @@ class AddRecipe extends React.Component {
                 placeholder="Add Description"
                 onChange={this.handleChange}
               />
-              <textarea
+              <label htmlFor="instructions">Add Instructions</label>
+              <CKEditor
+                name="instructions"
+                content={instructions}
+                events={{ change: this.handleEditorChange }}
+              />
+              {/* <textarea
                 name="instructions"
                 value={instructions}
                 id=""
@@ -109,7 +144,7 @@ class AddRecipe extends React.Component {
                 rows="10"
                 placeholder="Add Instructions"
                 onChange={this.handleChange}
-              />
+              /> */}
               <button
                 type="submit"
                 className="button-primary"
