@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Spinner from 'react-spinners';
 
 import { Query, Mutation } from 'react-apollo';
 import {
@@ -21,7 +22,7 @@ const handleDelete = deleteUserRecipe => {
 const UserRecipes = ({ username }) => (
   <Query query={GET_USER_RECIPES} variables={{ username }}>
     {({ data, loading, error }) => {
-      if (loading) return <div>Loading</div>;
+      if (loading) return <Spinner />;
       if (error) return <div>Error</div>;
       return (
         <ul>
