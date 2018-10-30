@@ -9,6 +9,7 @@ export const GET_ALL_RECIPES = gql`
       name
       imageUrl
       category
+      username
     }
   }
 `;

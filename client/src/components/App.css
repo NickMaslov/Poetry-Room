@@ -3,20 +3,12 @@
   margin-top: 1em;
 }
 
-.form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
 nav {
   text-align: center;
   padding-bottom: 0.2em;
   padding-top: 2em;
   background-color: #efefef;
   box-shadow: -3px 3px 10px 0px rgba(168, 168, 168, 0.7);
-
 }
 
 nav ul {
@@ -39,7 +31,7 @@ input,
 select,
 textarea {
   padding: 0.4em 0.2em;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 
 nav a,
@@ -53,7 +45,14 @@ nav a:link {
   font-weight: bold;
 }
 
-.button-delete {
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.delete-button {
   color: red;
   cursor: pointer;
 }

@@ -4,10 +4,10 @@ import posed from 'react-pose';
 
 import { Query } from 'react-apollo';
 import { GET_ALL_RECIPES } from '../queries';
-import RecipeItem from './Recipe/RecipeItem';
+import PoemItem from './Recipe/PoemItem';
 import Spinner from './Spinner';
 
-const RecipeList = posed.ul({
+const PoemList = posed.ul({
   shown: {
     x: '0%',
     staggerChildren: 100,
@@ -45,11 +45,11 @@ class App extends React.Component {
             //console.log(data);
             const { on } = this.state;
             return (
-              <RecipeList pose={on ? 'shown' : 'hidden'} className="cards">
+              <PoemList pose={on ? 'shown' : 'hidden'} className="cards">
                 {data.getAllRecipes.map(recipe => (
-                  <RecipeItem {...recipe} key={recipe._id} />
+                  <PoemItem {...recipe} key={recipe._id} />
                 ))}
-              </RecipeList>
+              </PoemList>
             );
           }}
         </Query>
