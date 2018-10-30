@@ -3,73 +3,73 @@ import { Link } from 'react-router-dom';
 
 import { Query, Mutation } from 'react-apollo';
 import {
-  GET_USER_RECIPES,
-  DELETE_USER_RECIPE,
-  GET_ALL_RECIPES,
+  GET_USER_POEMS,
+  DELETE_USER_POEM,
+  GET_ALL_POEMS,
   GET_CURRENT_USER,
 } from '../../queries';
 import Spinner from '../Spinner';
 
 class UserPoems extends React.Component {
-  handleDelete = deleteUserRecipe => {
+  handleDelete = deleteUserPoem => {
     const confirmDelete = window.confirm(
-      'Are you sure you want to delete this recipe?'
+      'Are you sure you want to delete this poem?'
     );
     if (confirmDelete) {
-      deleteUserRecipe();
+      deleteUserPoem();
     }
   };
   render() {
     const { username } = this.props;
     return (
-      <Query query={GET_USER_RECIPES} variables={{ username }}>
+      <Query query={GET_USER_POEMS} variables={{ username }}>
         {({ data, loading, error }) => {
           if (loading) return <Spinner />;
           if (error) return <div>Error</div>;
           return (
             <ul>
               <h3>Your Poems:</h3>
-              {!data.getUserRecipes.length && (
+              {!data.getUserPoems.length && (
                 <p>
                   <strong>You have not added any poems yet</strong>
                 </p>
               )}
-              {data.getUserRecipes.map(recipe => (
-                <li key={recipe._id}>
-                  <Link to={`/recipes/${recipe._id}`}>
-                    <p>{recipe.name}</p>
+              {data.getUserPoems.map(poem => (
+                <li key={poem._id}>
+                  <Link to={`/poems/${poem._id}`}>
+                    <p>{poem.name}</p>
                   </Link>
-                  <p style={{ marginBottom: '0' }}>{recipe.likes}</p>
+                  <p style={{ marginBottom: '0' }}>{poem.likes}</p>
                   <Mutation
-                    mutation={DELETE_USER_RECIPE}
-                    variables={{ _id: recipe._id }}
+                    mutation={DELETE_USER_POEM}
+                    variables={{ _id: poem._id }}
                     refetchQueries={() => [
-                      { query: GET_ALL_RECIPES },
+                      { query: GET_ALL_POEMS },
                       { query: GET_CURRENT_USER },
                     ]}
-                    update={(cache, { data: { deleteUserRecipe } }) => {
-                      const { getUserRecipes } = cache.readQuery({
-                        query: GET_USER_RECIPES,
+                    update={(cache, { data: { deleteUserPoem } }) => {
+                      const { getUserPoems } = cache.readQuery({
+                        query: GET_USER_POEMS,
                         variables: { username },
                       });
                       cache.writeQuery({
-                        query: GET_USER_RECIPES,
+                        query: GET_USER_POEMS,
                         variables: { username },
                         data: {
-                          getUserRecipes: getUserRecipes.filter(
-                            recipe => recipe._id !== deleteUserRecipe._id
+                          getUserPoems: getUserPoems.filter(
+                            poem => poem._id !== deleteUserPoem._id
                           ),
                         },
                       });
                     }}
                   >
-                    {(deleteUserRecipe, attrs = {}) => {
+                    {(deleteUserPoem, attrs = {}) => {
                       return (
                         <div>
                           <button className="button-primary">Update</button>
                           <p
                             className="delete-button"
-                            onClick={() => this.handleDelete(deleteUserRecipe)}
+                            onClick={() => this.handleDelete(deleteUserPoem)}
                           >
                             {attrs.loading ? 'deleting...' : 'x'}
                           </p>

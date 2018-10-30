@@ -3,16 +3,15 @@ import { withRouter } from 'react-router-dom';
 import CKEditor from 'react-ckeditor-component';
 
 import { Mutation } from 'react-apollo';
-import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
+import { ADD_POEM, GET_ALL_POEMS, GET_USER_POEMS } from '../../queries';
 import Error from '../Error';
 import withAuth from '../withAuth';
 
 const initialState = {
-  name: '',
+  title: '',
   imageUrl: '',
-  instructions: '',
-  category: 'Breakfast',
-  description: '',
+  content: '',
+  genres: 'Breakfast',
   username: '',
 };
 
@@ -41,9 +40,9 @@ class AddPoem extends React.Component {
     this.setState({ instructions: newContent });
   };
 
-  handleSubmit = (event, addRecipe) => {
+  handleSubmit = (event, addPoem) => {
     event.preventDefault();
-    addRecipe().then(({ data }) => {
+    addPoem().then(({ data }) => {
       this.clearState();
       this.props.history.push('/');
     });
@@ -56,12 +55,12 @@ class AddPoem extends React.Component {
     return isInvalid;
   };
 
-  updateCache = (cache, { data: { addRecipe } }) => {
-    const { getAllRecipes } = cache.readQuery({ query: GET_ALL_RECIPES });
+  updateCache = (cache, { data: { addPoem } }) => {
+    const { getAllPoems } = cache.readQuery({ query: GET_ALL_POEMS });
     cache.writeQuery({
-      query: GET_ALL_RECIPES,
+      query: GET_ALL_POEMS,
       data: {
-        getAllRecipes: [addRecipe, ...getAllRecipes],
+        getAllPoems: [addPoem, ...getAllPoems],
       },
     });
   };
@@ -77,9 +76,9 @@ class AddPoem extends React.Component {
     } = this.state;
     return (
       <div className="App">
-        <h2 className="App">Add Recipe</h2>
+        <h2 className="App">Add Poem</h2>
         <Mutation
-          mutation={ADD_RECIPE}
+          mutation={ADD_POEM}
           variables={{
             name,
             imageUrl,
@@ -89,27 +88,27 @@ class AddPoem extends React.Component {
             username,
           }}
           refetchQueries={() => [
-            { query: GET_USER_RECIPES, variables: { username } },
+            { query: GET_USER_POEMS, variables: { username } },
           ]}
           update={this.updateCache}
         >
-          {(addRecipe, { data, loading, error }) => (
+          {(addPoem, { data, loading, error }) => (
             <form
               className="form"
-              onSubmit={event => this.handleSubmit(event, addRecipe)}
+              onSubmit={event => this.handleSubmit(event, addPoem)}
             >
               <input
                 type="text"
                 name="name"
                 value={name}
-                placeholder="Recipe Name"
+                placeholder="Poem Name"
                 onChange={this.handleChange}
               />
               <input
                 type="text"
                 name="imageUrl"
                 value={imageUrl}
-                placeholder="Recipe Image"
+                placeholder="Poem Image"
                 onChange={this.handleChange}
               />
               <select

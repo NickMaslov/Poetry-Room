@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Mutation } from 'react-apollo';
-import { LIKE_RECIPE, GET_RECIPE, UNLIKE_RECIPE } from '../../queries';
+import { LIKE_POEM, GET_POEM, UNLIKE_POEM } from '../../queries';
 import withSession from '../withSession';
 
 class LikePoem extends React.Component {
@@ -23,53 +23,53 @@ class LikePoem extends React.Component {
     }
   }
 
-  handleClick = (likeRecipe, unlikeRecipe) => {
+  handleClick = (likePoem, unlikePoem) => {
     this.setState(
       prevState => ({
         liked: !prevState.liked,
       }),
-      () => this.handleLike(likeRecipe, unlikeRecipe)
+      () => this.handleLike(likePoem, unlikePoem)
     );
   };
 
-  handleLike = (likeRecipe, unlikeRecipe) => {
+  handleLike = (likePoem, unlikePoem) => {
     if (this.state.liked) {
-      likeRecipe().then(async ({ data }) => {
+      likePoem().then(async ({ data }) => {
         await this.props.refetch();
       });
     } else {
-      unlikeRecipe().then(async ({ data }) => {
+      unlikePoem().then(async ({ data }) => {
         await this.props.refetch();
       });
     }
   };
 
-  updateLike = (cache, { data: { likeRecipe } }) => {
+  updateLike = (cache, { data: { likePoem } }) => {
     const { _id } = this.props;
-    const { getRecipe } = cache.readQuery({
-      query: GET_RECIPE,
+    const { getPoem } = cache.readQuery({
+      query: GET_POEM,
       variables: { _id },
     });
     cache.writeQuery({
-      query: GET_RECIPE,
+      query: GET_POEM,
       variables: { _id },
       data: {
-        getRecipe: { ...getRecipe, likes: likeRecipe.likes + 1 },
+        getPoem: { ...getPoem, likes: likePoem.likes + 1 },
       },
     });
   };
 
-  updateUnlike = (cache, { data: { unlikeRecipe } }) => {
+  updateUnlike = (cache, { data: { unlikePoem } }) => {
     const { _id } = this.props;
-    const { getRecipe } = cache.readQuery({
-      query: GET_RECIPE,
+    const { getPoem } = cache.readQuery({
+      query: GET_POEM,
       variables: { _id },
     });
     cache.writeQuery({
-      query: GET_RECIPE,
+      query: GET_POEM,
       variables: { _id },
       data: {
-        getRecipe: { ...getRecipe, likes: unlikeRecipe.likes - 1 },
+        getPoem: { ...getPoem, likes: unlikePoem.likes - 1 },
       },
     });
   };
@@ -79,21 +79,21 @@ class LikePoem extends React.Component {
     const { _id } = this.props;
     return (
       <Mutation
-        mutation={UNLIKE_RECIPE}
+        mutation={UNLIKE_POEM}
         variables={{ _id, username }}
         update={this.updateUnlike}
       >
-        {unlikeRecipe => (
+        {unlikePoem => (
           <Mutation
-            mutation={LIKE_RECIPE}
+            mutation={LIKE_POEM}
             variables={{ _id, username }}
             update={this.updateLike}
           >
-            {likeRecipe =>
+            {likePoem =>
               username && (
                 <button
                   className="like-button"
-                  onClick={() => this.handleClick(likeRecipe, unlikeRecipe)}
+                  onClick={() => this.handleClick(likePoem, unlikePoem)}
                 >
                   {liked ? 'Unlike' : 'Like'}
                 </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ApolloConsumer } from 'react-apollo';
-import { SEARCH_RECIPES } from '../../queries';
+import { SEARCH_POEMS } from '../../queries';
 import SearchItem from './SearchItem';
 
 class Search extends React.Component {
@@ -9,9 +9,9 @@ class Search extends React.Component {
     searchResults: [],
   };
 
-  handleChange = ({ searchRecipes }) => {
+  handleChange = ({ searchPoems }) => {
     this.setState({
-      searchResults: searchRecipes,
+      searchResults: searchPoems,
     });
   };
   render() {
@@ -23,19 +23,19 @@ class Search extends React.Component {
             <input
               type="search"
               className="search"
-              placeholder="Search for Recipes"
+              placeholder="Search for Poems"
               onChange={async event => {
                 event.persist();
                 const { data } = await client.query({
-                  query: SEARCH_RECIPES,
+                  query: SEARCH_POEMS,
                   variables: { searchTerm: event.target.value },
                 });
                 this.handleChange(data);
               }}
             />
             <ul>
-              {searchResults.map(recipe => (
-                <SearchItem {...recipe} key={recipe._id} />
+              {searchResults.map(poem => (
+                <SearchItem {...poem} key={poem._id} />
               ))}
             </ul>
           </div>

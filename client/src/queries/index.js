@@ -62,7 +62,7 @@ export const LIKE_POEM = gql`
   ${poemFragments.like}
 `;
 
-export const UNLIKE_RECIPE = gql`
+export const UNLIKE_POEM = gql`
   mutation($_id: ID!, $username: String!) {
     unlikeRecipe(_id: $_id, username: $username) {
       ...LikeRecipe

@@ -2,14 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { Query } from 'react-apollo';
-import { GET_RECIPE } from '../../queries';
+import { GET_POEM } from '../../queries';
 import LikePoem from './LikePoem';
 import Spinner from '../Spinner';
 
 const PoemPage = ({ match }) => {
   const { _id } = match.params;
   return (
-    <Query query={GET_RECIPE} variables={{ _id }}>
+    <Query query={GET_POEM} variables={{ _id }}>
       {({ data, loading, error }) => {
         if (loading) return <Spinner />;
         if (error) return <div>Error</div>;
@@ -21,7 +21,7 @@ const PoemPage = ({ match }) => {
           instructions,
           username,
           likes,
-        } = data.getRecipe;
+        } = data.getPoem;
         return (
           <div className="App">
             <div
