@@ -7,6 +7,24 @@ import { ADD_POEM, GET_ALL_POEMS, GET_USER_POEMS } from '../../queries';
 import Error from '../Error';
 import withAuth from '../withAuth';
 
+const genresList = [
+  'Tragedy',
+  'Science fiction',
+  'Fantasy',
+  'Mythology',
+  'Adventure',
+  'Mystery',
+  'Drama',
+  'Romance',
+  'Action / Adventure',
+  'Satire',
+  'Horror',
+  'Tragic comedy',
+  'Young adult fiction',
+  'Dystopia',
+  'Action thriller',
+];
+
 const initialState = {
   title: '',
   imageUrl: '',
@@ -37,7 +55,7 @@ class AddPoem extends React.Component {
 
   handleEditorChange = event => {
     const newContent = event.editor.getData();
-    this.setState({ instructions: newContent });
+    this.setState({ content: newContent });
   };
 
   handleSubmit = (event, addPoem) => {
@@ -49,9 +67,8 @@ class AddPoem extends React.Component {
   };
 
   validateForm = () => {
-    const { name, imageUrl, category, description, instructions } = this.state;
-    const isInvalid =
-      !name || !imageUrl || !category || !description || !instructions;
+    const { title, imageUrl, content, genres } = this.state;
+    const isInvalid = !title || !imageUrl || !content || !genres;
     return isInvalid;
   };
 
@@ -66,25 +83,17 @@ class AddPoem extends React.Component {
   };
 
   render() {
-    const {
-      name,
-      imageUrl,
-      category,
-      description,
-      instructions,
-      username,
-    } = this.state;
+    const { title, imageUrl, content, genres, username } = this.state;
     return (
       <div className="App">
         <h2 className="App">Add Poem</h2>
         <Mutation
           mutation={ADD_POEM}
           variables={{
-            name,
+            title,
             imageUrl,
-            category,
-            description,
-            instructions,
+            content,
+            genres,
             username,
           }}
           refetchQueries={() => [
@@ -99,9 +108,9 @@ class AddPoem extends React.Component {
             >
               <input
                 type="text"
-                name="name"
-                value={name}
-                placeholder="Poem Name"
+                name="title"
+                value={title}
+                placeholder="Poem Title"
                 onChange={this.handleChange}
               />
               <input
@@ -111,28 +120,23 @@ class AddPoem extends React.Component {
                 placeholder="Poem Image"
                 onChange={this.handleChange}
               />
+              <label htmlFor="genres">Add Genres</label>
               <select
-                name="category"
+                name="genres"
                 id=""
                 onChange={this.handleChange}
-                value={category}
+                value={genres}
               >
-                <option value="Breakfast">Breakfast</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Snack">Snack</option>
+                {genresList.map(genre => (
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
+                ))}
               </select>
-              <input
-                type="text"
-                name="description"
-                value={description}
-                placeholder="Add Description"
-                onChange={this.handleChange}
-              />
-              <label htmlFor="instructions">Add Instructions</label>
+              <label htmlFor="content">Add Content</label>
               <CKEditor
-                name="instructions"
-                content={instructions}
+                name="content"
+                content={content}
                 events={{ change: this.handleEditorChange }}
               />
               {/* <textarea

@@ -22,8 +22,8 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-  // uri: 'https://recipes--book.herokuapp.com/graphql',
-  uri: 'http://localhost:4444/graphql',
+  uri: 'https://poetryroom.herokuapp.com/',
+  // uri: 'http://localhost:4444/graphql',
   fetchOptions: {
     credentials: 'include',
   },
@@ -53,14 +53,11 @@ const Root = ({ refetch, session }) => (
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/search" component={Search} />
-        <Route path="/recipes/:_id" component={PoemPage} />
+        <Route path="/poems/:_id" component={PoemPage} />
         <Route path="/profile" render={() => <Profile session={session} />} />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
-        <Route
-          path="/recipe/add"
-          render={() => <AddPoem session={session} />}
-        />
+        <Route path="/poem/add" render={() => <AddPoem session={session} />} />
         <Redirect to="/" />
       </Switch>
     </Fragment>
