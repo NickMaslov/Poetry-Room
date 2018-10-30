@@ -1,33 +1,30 @@
 import { gql } from 'apollo-boost';
-import { recipeFragments } from './fragments';
+import { poemFragments } from './fragments';
 
 /** Recipes Queries */
-export const GET_ALL_RECIPES = gql`
+export const GET_ALL_POEMS = gql`
   query {
-    getAllRecipes {
-      _id
-      name
-      imageUrl
-      category
-      username
+    getAllPoems {
+      ...CompletePoem
     }
   }
+  ${poemFragments.poem}
 `;
 
-export const GET_RECIPE = gql`
+export const GET_POEM = gql`
   query($_id: ID!) {
-    getRecipe(_id: $_id) {
-      ...CompleteRecipe
+    getPoem(_id: $_id) {
+      ...CompletePoem
     }
   }
-  ${recipeFragments.recipe}
+  ${poemFragments.poem}
 `;
 
-export const SEARCH_RECIPES = gql`
+export const SEARCH_POEMS = gql`
   query($searchTerm: String) {
-    searchRecipes(searchTerm: $searchTerm) {
+    searchPoems(searchTerm: $searchTerm) {
       _id
-      name
+      title
       likes
     }
   }
@@ -35,36 +32,34 @@ export const SEARCH_RECIPES = gql`
 
 /** Recepies Mutations */
 
-export const ADD_RECIPE = gql`
+export const ADD_POEM = gql`
   mutation(
-    $name: String!
+    $title: String!
     $imageUrl: String!
-    $description: String!
-    $category: String!
-    $instructions: String!
+    $content: String!
+    $genres: String!
     $username: String
   ) {
-    addRecipe(
-      name: $name
+    addPoem(
+      title: $title
       imageUrl: $imageUrl
-      description: $description
-      category: $category
-      instructions: $instructions
+      content: $content
+      genres: $genres
       username: $username
     ) {
-      ...CompleteRecipe
+      ...CompletePoem
     }
   }
-  ${recipeFragments.recipe}
+  ${poemFragments.poem}
 `;
 
-export const LIKE_RECIPE = gql`
+export const LIKE_POEM = gql`
   mutation($_id: ID!, $username: String!) {
-    likeRecipe(_id: $_id, username: $username) {
-      ...LikeRecipe
+    likePoem(_id: $_id, username: $username) {
+      ...LikePoem
     }
   }
-  ${recipeFragments.like}
+  ${poemFragments.like}
 `;
 
 export const UNLIKE_RECIPE = gql`
@@ -73,12 +68,12 @@ export const UNLIKE_RECIPE = gql`
       ...LikeRecipe
     }
   }
-  ${recipeFragments.like}
+  ${poemFragments.like}
 `;
 
-export const DELETE_USER_RECIPE = gql`
+export const DELETE_USER_POEM = gql`
   mutation($_id: ID!) {
-    deleteUserRecipe(_id: $_id) {
+    deleteUserPoem(_id: $_id) {
       _id
     }
   }
@@ -94,17 +89,17 @@ export const GET_CURRENT_USER = gql`
       email
       favorites {
         _id
-        name
+        title
       }
     }
   }
 `;
 
-export const GET_USER_RECIPES = gql`
+export const GET_USER_POEMS = gql`
   query($username: String!) {
-    getUserRecipes(username: $username) {
+    getUserPoems(username: $username) {
       _id
-      name
+      title
       likes
     }
   }

@@ -9,17 +9,17 @@ const createToken = (user, secret, expiresIn) => {
 
 exports.resolvers = {
   Query: {
-    getAllRecipes: async (root, args, { Recipe }) => {
-      const allRecipes = await Recipe.find().sort({ createdDate: 'desc' });
-      return allRecipes;
+    getAllPoems: async (root, args, { Poem }) => {
+      const allPoems = await Poem.find().sort({ createdDate: 'desc' });
+      return allPoems;
     },
-    getRecipe: async (root, { _id }, { Recipe }) => {
-      const recipe = await Recipe.findOne({ _id });
+    getPoem: async (root, { _id }, { Poem }) => {
+      const recipe = await Poem.findOne({ _id });
       return recipe;
     },
-    searchRecipes: async (root, { searchTerm }, { Recipe }) => {
+    searchPoems: async (root, { searchTerm }, { Poem }) => {
       if (searchTerm) {
-        const searchResults = await Recipe.find(
+        const searchResults = await Poem.find(
           {
             $text: { $search: searchTerm },
           },
@@ -31,16 +31,16 @@ exports.resolvers = {
         });
         return searchResults;
       } else {
-        const recipes = await Recipe.find().sort({ likes: 'desc' });
-        return recipes;
+        const poems = await Poem.find().sort({ likes: 'desc' });
+        return poems;
       }
     },
 
-    getUserRecipes: async (root, { username }, { Recipe }) => {
-      const userRecipes = await Recipe.find({ username }).sort({
+    getUserPoems: async (root, { username }, { Poem }) => {
+      const userPoems = await Poem.find({ username }).sort({
         createdDate: 'desc',
       });
-      return userRecipes;
+      return userPoems;
     },
     getCurrentUser: async (root, args, { currentUser, User }) => {
       if (!currentUser) {
@@ -50,29 +50,28 @@ exports.resolvers = {
         username: currentUser.username,
       }).populate({
         path: 'favorites',
-        model: 'Recipe',
+        model: 'Poem',
       });
       return user;
     },
   },
   Mutation: {
-    addRecipe: async (
+    addPoem: async (
       root,
-      { name, imageUrl, description, category, instructions, username },
-      { Recipe }
+      { title, imageUrl, content, genres, username },
+      { Poem }
     ) => {
-      const newRecipe = await new Recipe({
-        name,
+      const newPoem = await new Poem({
+        title,
         imageUrl,
-        description,
-        category,
-        instructions,
+        content,
+        genres,
         username,
       }).save();
-      return newRecipe;
+      return newPoem;
     },
-    likeRecipe: async (root, { _id, username }, { Recipe, User }) => {
-      const recipe = await Recipe.findOneAndUpdate(
+    likePoem: async (root, { _id, username }, { Poem, User }) => {
+      const poem = await Poem.findOneAndUpdate(
         { _id },
         {
           $inc: {
@@ -88,10 +87,10 @@ exports.resolvers = {
           },
         }
       );
-      return recipe;
+      return poem;
     },
-    unlikeRecipe: async (root, { _id, username }, { Recipe, User }) => {
-      const recipe = await Recipe.findOneAndUpdate(
+    unlikePoem: async (root, { _id, username }, { Poem, User }) => {
+      const poem = await Poem.findOneAndUpdate(
         { _id },
         {
           $inc: {
@@ -107,11 +106,11 @@ exports.resolvers = {
           },
         }
       );
-      return recipe;
+      return poem;
     },
-    deleteUserRecipe: async (root, { _id }, { Recipe }) => {
-      const recipe = await Recipe.findOneAndRemove({ _id });
-      return recipe;
+    deleteUserPoem: async (root, { _id }, { Poem }) => {
+      const poem = await Poem.findOneAndRemove({ _id });
+      return poem;
     },
 
     signinUser: async (root, { username, password }, { User }) => {

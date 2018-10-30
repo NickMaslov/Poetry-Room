@@ -12,22 +12,33 @@ type Recipe {
     username: String
 }
 
+type Poem {
+    _id: ID
+    title: String!
+    content: String!
+    imageUrl: String!
+    genres: String!
+    createdDate: String
+    likes: Int
+    username: String
+}
+
 type User {
     _id: ID
     username: String! @unique
     password: String! 
     email: String!
     joinDate: String
-    favorites: [Recipe]
+    favorites: [Poem]
 }
 
 type Query {
-    getAllRecipes: [Recipe]
-    getRecipe(_id: ID!): Recipe
-    searchRecipes(searchTerm: String): [Recipe]
+    getAllPoems: [Poem]
+    getPoem(_id: ID!): Poem
+    searchPoems(searchTerm: String): [Poem]
 
     getCurrentUser: User
-    getUserRecipes(username: String!): [Recipe]
+    getUserPoems(username: String!): [Poem]
 }
 
 type Token {
@@ -35,17 +46,16 @@ type Token {
 }
 
 type Mutation {
-    addRecipe( 
-        name: String!,
-        imageUrl: String!,
-        description: String!,
-        category: String!,
-        instructions: String!,
+    addPoem( 
+        title: String!
+        imageUrl: String!
+        content: String!
+        genres: String!
         username: String
-    ): Recipe
-    deleteUserRecipe(_id: ID!): Recipe
-    likeRecipe(_id: ID!,username: String!): Recipe
-    unlikeRecipe(_id: ID!,username: String!): Recipe
+    ): Poem
+    deleteUserPoem(_id: ID!): Poem
+    likePoem(_id: ID!,username: String!): Poem
+    unlikePoem(_id: ID!,username: String!): Poem
 
     signinUser(
         username: String!,
@@ -58,5 +68,4 @@ type Mutation {
         email: String!
     ): Token
 }
-
 `;

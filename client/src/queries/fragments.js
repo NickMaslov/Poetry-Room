@@ -1,20 +1,19 @@
 import { gql } from 'apollo-boost';
-export const recipeFragments = {
-  recipe: gql`
-    fragment CompleteRecipe on Recipe {
+export const poemFragments = {
+  poem: gql`
+    fragment CompletePoem on Poem {
       _id
-      name
+      title
+      content
       imageUrl
-      category
-      description
-      instructions
-      likes
+      genres
       createdDate
+      likes
       username
     }
   `,
   like: gql`
-    fragment LikeRecipe on Recipe {
+    fragment LikePoem on Poem {
       _id
       likes
     }

@@ -5,7 +5,8 @@ const path = require('path');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: 'variables.env' });
-const Recipe = require('./models/Recipe');
+
+const Poem = require('./models/Poem');
 const User = require('./models/User');
 
 //Bring in GraphQL-Express middleware
@@ -64,7 +65,7 @@ app.use(
   graphqlExpress(({ currentUser }) => ({
     schema,
     context: {
-      Recipe,
+      Poem,
       User,
       currentUser,
     },

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const RecipeSchema = new Schema({
-  name: {
+const PoemSchema = new Schema({
+  title: {
     type: String,
     required: true,
   },
@@ -10,15 +10,11 @@ const RecipeSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
+  content: {
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  instructions: {
+  genres: {
     type: String,
     required: true,
   },
@@ -35,8 +31,8 @@ const RecipeSchema = new Schema({
   },
 });
 
-RecipeSchema.index({
+PoemSchema.index({
   '$**': 'text',
 });
 
-module.exports = mongoose.model('Recipe', RecipeSchema);
+module.exports = mongoose.model('Poem', PoemSchema);
