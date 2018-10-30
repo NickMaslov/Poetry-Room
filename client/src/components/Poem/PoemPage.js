@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom';
 
 import { Query } from 'react-apollo';
 import { GET_RECIPE } from '../../queries';
-import LikeRecipe from './LikeRecipe';
+import LikePoem from './LikePoem';
 import Spinner from '../Spinner';
 
-const RecipePage = ({ match }) => {
+const PoemPage = ({ match }) => {
   const { _id } = match.params;
   return (
     <Query query={GET_RECIPE} variables={{ _id }}>
@@ -56,7 +56,7 @@ const RecipePage = ({ match }) => {
               />
             </div>
 
-            <LikeRecipe _id={_id} />
+            <LikePoem _id={_id} />
           </div>
         );
       }}
@@ -64,4 +64,4 @@ const RecipePage = ({ match }) => {
   );
 };
 
-export default withRouter(RecipePage);
+export default withRouter(PoemPage);

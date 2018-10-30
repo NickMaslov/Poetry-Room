@@ -4,7 +4,7 @@ import posed from 'react-pose';
 
 import { Query } from 'react-apollo';
 import { GET_ALL_RECIPES } from '../queries';
-import PoemItem from './Recipe/PoemItem';
+import PoemItem from './Poem/PoemItem';
 import Spinner from './Spinner';
 
 const PoemList = posed.ul({
@@ -17,7 +17,7 @@ const PoemList = posed.ul({
   },
 });
 
-class App extends React.Component {
+class Home extends React.Component {
   state = {
     on: false,
   };
@@ -58,4 +58,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Home;

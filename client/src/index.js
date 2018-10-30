@@ -8,14 +8,14 @@ import {
 } from 'react-router-dom';
 import './index.css';
 
-import App from './components/App';
+import Home from './components/Home';
 import Navbar from './components/Navbar';
 import withSession from './components/withSession';
 import Signin from './components/Auth/Singin';
 import Signup from './components/Auth/Singup';
-import Search from './components/Recipe/Search';
-import AddRecipe from './components/Recipe/AddRecipe';
-import RecipePage from './components/Recipe/RecipePage';
+import Search from './components/Poem/Search';
+import AddPoem from './components/Poem/AddPoem';
+import PoemPage from './components/Poem/PoemPage';
 import Profile from './components/Profile/Profile';
 
 import ApolloClient from 'apollo-boost';
@@ -51,15 +51,15 @@ const Root = ({ refetch, session }) => (
     <Fragment>
       <Navbar session={session} />
       <Switch>
-        <Route path="/" exact component={App} />
+        <Route path="/" exact component={Home} />
         <Route path="/search" component={Search} />
-        <Route path="/recipes/:_id" component={RecipePage} />
+        <Route path="/recipes/:_id" component={PoemPage} />
         <Route path="/profile" render={() => <Profile session={session} />} />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
         <Route
           path="/recipe/add"
-          render={() => <AddRecipe session={session} />}
+          render={() => <AddPoem session={session} />}
         />
         <Redirect to="/" />
       </Switch>

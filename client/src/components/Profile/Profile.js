@@ -1,13 +1,13 @@
 import React from 'react';
 
 import UserInfo from './UserInfo';
-import UserRecipes from './UserRecipes';
+import UserPoems from './UserPoems';
 import withAuth from '../withAuth';
 
 const Profile = ({ session }) => (
   <div className="App">
     <UserInfo session={session} />
-    <UserRecipes username={session.getCurrentUser.username} />
+    <UserPoems username={session.getCurrentUser.username} />
   </div>
 );
 

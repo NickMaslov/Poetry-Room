@@ -16,7 +16,7 @@ const initialState = {
   username: '',
 };
 
-class AddRecipe extends React.Component {
+class AddPoem extends React.Component {
   state = { ...initialState };
 
   clearState = () => {
@@ -162,5 +162,5 @@ class AddRecipe extends React.Component {
 }
 
 export default withAuth(session => session && session.getCurrentUser)(
-  withRouter(AddRecipe)
+  withRouter(AddPoem)
 );

@@ -10,7 +10,7 @@ import {
 } from '../../queries';
 import Spinner from '../Spinner';
 
-class UserRecipes extends React.Component {
+class UserPoems extends React.Component {
   handleDelete = deleteUserRecipe => {
     const confirmDelete = window.confirm(
       'Are you sure you want to delete this recipe?'
@@ -87,4 +87,4 @@ class UserRecipes extends React.Component {
   }
 }
 
-export default UserRecipes;
+export default UserPoems;
