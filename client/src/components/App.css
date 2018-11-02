@@ -39,6 +39,8 @@ nav a:link {
   text-decoration: none;
   font-size: 2.5rem;
   font-weight: 100;
+  color: goldenrod;
+
 }
 
 .active {
@@ -61,7 +63,7 @@ nav a:link {
 
 .main-title {
   padding: 0.5em;
-  color: #1eaedb;
+  color: gold;
   margin: 0;
   text-decoration-line: underline;
   text-decoration-style: dotted;
@@ -123,8 +125,7 @@ nav a:link {
   padding: 0.2em;
 }
 
-.Lunch {
-  width: 20%;
+.writer_tag {
   margin: 20px;
   z-index: 1;
   padding: 7px;
@@ -211,10 +212,10 @@ nav a:link {
   font-style: italic;
 }
 
-.recipe-name {
-  color: #1eaedb;
-  text-decoration: underline;
-  text-decoration-style: wavy;
+.poem-name {
+  color: goldenrod;
+  /* text-decoration: underline;
+  text-decoration-style: wavy; */
 }
 
 .recipe-instructions {
@@ -229,7 +230,7 @@ nav a:link {
 .recipe-instructions__title {
   font-weight: 200;
   letter-spacing: 2px;
-  color: #1eaedb;
+  color: goldenrod;
   text-decoration: underline;
 }
 
@@ -259,4 +260,75 @@ nav a:link {
 .spinner {
   text-align: center;
   padding: 5em;
+}
+
+.first_row>p {
+  margin: 0;
+  color: gray;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+/* User Recipes */
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  visibility: hidden;
+  backface-visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.modal.modal-open {
+  visibility: visible;
+  backface-visibility: visible;
+  opacity: 1;
+  z-index: 1;
+}
+
+.modal-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  max-width: 35em;
+  padding: 1em 1.5em;
+  position: relative;
+  margin: 2em;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
+.modal-content-inner {
+  padding-top: 1em;
+  margin-bottom: 0;
+}
+
+.modal-content-inner input {
+  width: 500px;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.modal-buttons button {
+  margin-left: 1em;
+}
+
+.modal-buttons button:first-child {
+  margin-left: 0;
 }

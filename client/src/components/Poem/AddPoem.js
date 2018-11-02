@@ -7,7 +7,7 @@ import { ADD_POEM, GET_ALL_POEMS, GET_USER_POEMS } from '../../queries';
 import Error from '../Error';
 import withAuth from '../withAuth';
 
-const genresList = [
+export const genresList = [
   'Tragedy',
   'Science fiction',
   'Fantasy',
@@ -29,7 +29,7 @@ const initialState = {
   title: '',
   imageUrl: '',
   content: '',
-  genres: 'Breakfast',
+  genres: '',
   username: '',
 };
 

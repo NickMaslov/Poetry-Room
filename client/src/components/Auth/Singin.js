@@ -6,7 +6,7 @@ import { SIGNIN_USER } from '../../queries';
 import Error from '../Error';
 
 const initialState = {
-  username: '',
+  email: '',
   password: '',
 };
 
@@ -34,17 +34,17 @@ class Signin extends React.Component {
   };
 
   validateForm = () => {
-    const { username, password } = this.state;
-    const isInvalid = !username || !password;
+    const { email, password } = this.state;
+    const isInvalid = !email || !password;
     return isInvalid;
   };
 
   render() {
-    const { username, password } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="App">
         <h2 className="App">Signin</h2>
-        <Mutation mutation={SIGNIN_USER} variables={{ username, password }}>
+        <Mutation mutation={SIGNIN_USER} variables={{ email, password }}>
           {(signinUser, { data, loading, error }) => {
             return (
               <form
@@ -53,9 +53,9 @@ class Signin extends React.Component {
               >
                 <input
                   type="text"
-                  name="username"
-                  value={username}
-                  placeholder="Username"
+                  name="email"
+                  value={email}
+                  placeholder="Email"
                   onChange={this.handleChange}
                 />
                 <input

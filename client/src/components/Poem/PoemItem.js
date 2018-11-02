@@ -11,16 +11,22 @@ const PoemItem = posed.li({
   },
 });
 
-export default ({ _id, imageUrl, name, category, username }) => {
+export default ({ _id, imageUrl, title, category, content, username }) => {
   return (
     <PoemItem
       style={{ background: `url(${imageUrl}) center center / cover no-repeat` }}
       className="card"
     >
-      <span className={category}>BY {username.toUpperCase()}</span>
+      <span className="writer_tag">BY {username.toUpperCase()}</span>
       <div className="card-text">
-        <Link to={`/recipes/${_id}`}>
-          <h4>{name}</h4>
+        <Link to={`/poems/${_id}`}>
+          <h4>{title}</h4>
+          <div
+            className="first_row"
+            dangerouslySetInnerHTML={{
+              __html: `${content.slice(0, 30)}...`,
+            }}
+          />
         </Link>
       </div>
     </PoemItem>

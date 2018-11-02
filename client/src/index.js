@@ -22,7 +22,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-  uri: 'https://poetryroom.herokuapp.com/',
+  uri: 'https://poetryroom.herokuapp.com',
   // uri: 'http://localhost:4444/graphql',
   fetchOptions: {
     credentials: 'include',
@@ -49,6 +49,9 @@ const client = new ApolloClient({
 const Root = ({ refetch, session }) => (
   <Router>
     <Fragment>
+      <div style={{ color: 'red', backgroundColor: 'lightpink' }}>
+        **website currently under construction
+      </div>
       <Navbar session={session} />
       <Switch>
         <Route path="/" exact component={Home} />

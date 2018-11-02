@@ -58,7 +58,7 @@ type Mutation {
     unlikePoem(_id: ID!,username: String!): Poem
 
     signinUser(
-        username: String!,
+        email: String!,
         password: String!
     ): Token
 

@@ -36,7 +36,7 @@ class Home extends React.Component {
     return (
       <div className="App">
         <h1 className="main-title">
-          Find Poems You <strong>Love</strong>
+          Find Poems You <strong style={{ color: 'pink' }}>Love</strong>
         </h1>
         <Query query={GET_ALL_POEMS}>
           {({ data, loading, error }) => {

@@ -20,8 +20,8 @@ const UserInfo = ({ session }) => (
       </h3>
       {session.getCurrentUser.favorites.map(favorite => (
         <li key={favorite._id}>
-          <Link to={`/recipes/${favorite._id}`}>
-            <p>{favorite.name}</p>
+          <Link to={`/poems/${favorite._id}`}>
+            <p>{favorite.title}</p>
           </Link>
         </li>
       ))}

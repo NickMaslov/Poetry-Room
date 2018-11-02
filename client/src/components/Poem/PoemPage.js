@@ -14,11 +14,10 @@ const PoemPage = ({ match }) => {
         if (loading) return <Spinner />;
         if (error) return <div>Error</div>;
         const {
+          title,
           imageUrl,
-          name,
-          category,
-          description,
-          instructions,
+          content,
+          genres,
           username,
           likes,
         } = data.getPoem;
@@ -32,11 +31,11 @@ const PoemPage = ({ match }) => {
             />
             <div className="recipe">
               <div className="recipe-header">
-                <h2 className="recipe-name">
-                  <strong>{name}</strong>
+                <h2>
+                  <strong>{title}</strong>
                 </h2>
                 <h5>
-                  <strong>{category}</strong>
+                  <em>{genres}</em>
                 </h5>
                 <p>Created by {username}</p>
                 <p>
@@ -47,13 +46,11 @@ const PoemPage = ({ match }) => {
                 </p>
               </div>
               <blockquote className="recipe-description">
-                {description}
+                <div
+                  className="recipe-instructions"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
               </blockquote>
-              <h3 className="recipe-instructions__title">Instructions</h3>
-              <div
-                className="recipe-instructions"
-                dangerouslySetInnerHTML={{ __html: instructions }}
-              />
             </div>
 
             <LikePoem _id={_id} />
