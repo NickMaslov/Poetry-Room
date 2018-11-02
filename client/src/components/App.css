@@ -65,8 +65,9 @@ nav a:link {
   padding: 0.5em;
   color: gold;
   margin: 0;
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
+  opacity: 0.5;
+  /* text-decoration-line: underline;
+  text-decoration-style: dotted; */
 }
 
 .cards {
@@ -133,6 +134,8 @@ nav a:link {
   color: white;
   background: #24c6dc;
   background: linear-gradient(to right, #514a9d, #24c6dc);
+  opacity: 0.7;
+  font-weight: 100;
 }
 
 .Snack {
