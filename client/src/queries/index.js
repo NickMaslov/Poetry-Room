@@ -79,6 +79,30 @@ export const DELETE_USER_POEM = gql`
   }
 `;
 
+export const UPDATE_USER_POEM = gql`
+  mutation(
+    $_id: ID!
+    $title: String!
+    $imageUrl: String!
+    $content: String!
+    $genres: String!
+  ) {
+    updateUserPoem(
+      _id: $_id
+      title: $title
+      imageUrl: $imageUrl
+      content: $content
+      genres: $genres
+    ) {
+      _id
+      title
+      imageUrl
+      content
+      genres
+    }
+  }
+`;
+
 /** User Queries */
 
 export const GET_CURRENT_USER = gql`
@@ -100,6 +124,9 @@ export const GET_USER_POEMS = gql`
     getUserPoems(username: $username) {
       _id
       title
+      imageUrl
+      content
+      genres
       likes
     }
   }

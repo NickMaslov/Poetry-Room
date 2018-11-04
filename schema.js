@@ -47,13 +47,20 @@ type Token {
 
 type Mutation {
     addPoem( 
-        title: String!
-        imageUrl: String!
-        content: String!
-        genres: String!
+        title: String!,
+        imageUrl: String!,
+        content: String!,
+        genres: String!,
         username: String
     ): Poem
     deleteUserPoem(_id: ID!): Poem
+    updateUserPoem(
+        _id: ID!, 
+        title: String!,
+        imageUrl: String!,
+        content: String!,
+        genres: String!
+    ): Poem
     likePoem(_id: ID!,username: String!): Poem
     unlikePoem(_id: ID!,username: String!): Poem
 

@@ -113,6 +113,19 @@ exports.resolvers = {
       return poem;
     },
 
+    updateUserPoem: async (
+      root,
+      { _id, title, imageUrl, genres, content },
+      { Poem }
+    ) => {
+      const updatedPoem = await Poem.findOneAndUpdate(
+        { _id },
+        { $set: { title, imageUrl, genres, content } },
+        { new: true }
+      );
+      return updatedPoem;
+    },
+
     signinUser: async (root, { email, password }, { User }) => {
       const user = await User.findOne({ email });
       if (!user) throw new Error('User not found');

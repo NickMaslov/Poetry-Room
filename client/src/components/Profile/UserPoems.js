@@ -9,11 +9,13 @@ import {
   DELETE_USER_POEM,
   GET_ALL_POEMS,
   GET_CURRENT_USER,
+  UPDATE_USER_POEM,
 } from '../../queries';
 import Spinner from '../Spinner';
 
 class UserPoems extends React.Component {
   state = {
+    id: '',
     title: '',
     content: '',
     imageUrl: '',
@@ -29,6 +31,13 @@ class UserPoems extends React.Component {
       deleteUserPoem();
     }
   };
+  loadPoem = poem => {
+    console.log(poem);
+    this.setState({ ...poem, modal: true });
+  };
+  closeModal = () => {
+    this.setState({ modal: false });
+  };
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -38,6 +47,13 @@ class UserPoems extends React.Component {
   handleEditorChange = event => {
     const newContent = event.editor.getData();
     this.setState({ content: newContent });
+  };
+  handleSubmit = (event, updateUserPoem) => {
+    event.preventDefault();
+    updateUserPoem().then(({ data }) => {
+      console.log(data);
+      this.closeModal();
+    });
   };
   render() {
     const { username } = this.props;
@@ -51,10 +67,12 @@ class UserPoems extends React.Component {
             <ul>
               {modal && (
                 <EditPoemModal
+                  poem={this.state}
                   handleChange={this.handleChange}
                   handleEditorChange={this.handleEditorChange}
                   content={this.state.content}
                   closeModal={this.closeModal}
+                  handleSubmit={this.handleSubmit}
                 />
               )}
               <h3>Your Poems:</h3>
@@ -66,9 +84,20 @@ class UserPoems extends React.Component {
               {data.getUserPoems.map(poem => (
                 <li key={poem._id}>
                   <Link to={`/poems/${poem._id}`}>
-                    <p>{poem.name}</p>
+                    <p>{poem.title}</p>
                   </Link>
-                  <p style={{ marginBottom: '0' }}>{poem.likes}</p>
+                  <p style={{ marginBottom: '0' }}>
+                    likes{' '}
+                    <span
+                      className="emoji"
+                      role="img"
+                      aria-label="heart"
+                      aria-hidden={'heart' ? 'false' : 'true'}
+                    >
+                      ❤️
+                    </span>
+                    {poem.likes}
+                  </p>
                   <Mutation
                     mutation={DELETE_USER_POEM}
                     variables={{ _id: poem._id }}
@@ -97,7 +126,7 @@ class UserPoems extends React.Component {
                         <div>
                           <button
                             className="button-primary"
-                            onClick={() => this.setState({ modal: true })}
+                            onClick={() => this.loadPoem(poem)}
                           >
                             Update
                           </button>
@@ -122,53 +151,74 @@ class UserPoems extends React.Component {
 }
 
 const EditPoemModal = ({
+  poem,
   handleChange,
   handleEditorChange,
-  content,
   closeModal,
-}) => (
-  <div className="modal modal-open">
-    <div className="modal-inner">
-      <div className="modal-content">
-        <form className="modal-content-inner">
-          <h4>Edit Recipe</h4>
-          <input
-            type="text"
-            name="title"
-            placeholder="Poem Title"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="imageUrl"
-            placeholder="Poem Image"
-            onChange={handleChange}
-          />
-          <label htmlFor="genres">Add Genres</label>
-          <select name="genres" id="" onChange={handleChange}>
-            {genresList.map(genre => (
-              <option key={genre} value={genre}>
-                {genre}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="content">Add Content</label>
-          <CKEditor
-            name="content"
-            content={content}
-            events={{ change: handleEditorChange }}
-          />
-          <hr />
-          <div className="modal-buttons">
-            <div type="submit" className="button-primary">
-              Update
+  handleSubmit,
+}) => {
+  let { title, _id, content, genres, imageUrl } = poem;
+  return (
+    <Mutation
+      mutation={UPDATE_USER_POEM}
+      variables={{ _id, title, imageUrl, genres, content }}
+    >
+      {updateUserPoem => (
+        <div className="modal modal-open">
+          <div className="modal-inner">
+            <div className="modal-content">
+              <form
+                onSubmit={event => handleSubmit(event, updateUserPoem)}
+                className="modal-content-inner"
+              >
+                <h4>Edit Recipe</h4>
+                <input
+                  type="text"
+                  name="title"
+                  value={title}
+                  placeholder="Poem Title"
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="imageUrl"
+                  value={imageUrl}
+                  placeholder="Poem Image"
+                  onChange={handleChange}
+                />
+                <label htmlFor="genres">Add Genres</label>
+                <select
+                  name="genres"
+                  value={genres}
+                  id=""
+                  onChange={handleChange}
+                >
+                  {genresList.map(genre => (
+                    <option key={genre} value={genre}>
+                      {genre}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor="content">Add Content</label>
+                <CKEditor
+                  name="content"
+                  content={content}
+                  events={{ change: handleEditorChange }}
+                />
+                <hr />
+                <div className="modal-buttons">
+                  <button type="submit" className="button-primary">
+                    Update
+                  </button>
+                  <button onClick={closeModal}>Cancel</button>
+                </div>
+              </form>
             </div>
-            <button onClick={closeModal}>Cancel</button>
           </div>
-        </form>
-      </div>
-    </div>
-  </div>
-);
+        </div>
+      )}
+    </Mutation>
+  );
+};
 
 export default UserPoems;
